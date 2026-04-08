@@ -72,6 +72,7 @@ public class Environment extends Node {
 
 	// This is not in an object-oriented style, it's more or less a
 	// translation of the Scheme assq function.
+	//	finds 'variable' w/name('id') and value('alist')
 	private static Node find(Node id, Node alist) {
 		if (!alist.isPair())
 			return null; // in Scheme we'd return #f
@@ -85,6 +86,7 @@ public class Environment extends Node {
 		}
 	}
 
+	// finds 'variable' w/name('id') in innermost scope
 	public Node lookup(Node id) {
 		Node val = find(id, scope);
 		if (val == null && env == null) {
@@ -99,13 +101,30 @@ public class Environment extends Node {
 	}
 
 	public void define(Node id, Node val) {
-		// TODO: implement this function
+		// TODO: implement this functio
+		//
+		Node definedValue = scope.lookup(id);
+		if (definedValue == Nil) {
+			scope.assign(id, val);
+		} else {
+			definedValue.setCar(val);
+		}
 	}
 
 	public void assign(Node id, Node val) {
 		// TODO: implement this function
+		//
 
 		// You can use find() to get a list containing the value and
 		// then update the value using setCar()
+
+		Node valueToAssign = scope.find(id, val);
+		if (valuetToAssign == null) {
+			System.out.println("Error: variable not found");
+		} else if (valueToAssign !== null) {
+			valueToAssign.setCar(val);
+		} else {
+			env.assign(id, val):
+		}
 	}
 }
