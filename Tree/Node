@@ -116,4 +116,12 @@ public class Node {
         System.err.println("Error: Node.eval not yet implemented");
         return Nil.getInstance();
     }
+
+    // TODO: The method apply() should be defined in class Node
+    // to report an error. It should be overwritten only in classes
+    // BuiltIn and Closure.
+    //
+    public Node apply(Node args) {
+        System.err.println("Error: Node arguments not viable");
+    }
 }
