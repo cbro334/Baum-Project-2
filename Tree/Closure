@@ -48,7 +48,10 @@ public class Closure extends Node {
     // TODO: The method apply() should be defined in class Node
     // to report an error. It should be overwritten only in classes
     // BuiltIn and Closure.
+    //
     public Node apply(Node args) {
-        return null;
+        Environment new_env = args.env;
+        fun = args;
+        eval(new_env, args);
     }
 }
