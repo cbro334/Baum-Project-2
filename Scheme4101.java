@@ -66,10 +66,13 @@ public class Scheme4101 {
 		// Read-eval-print loop
 
 		// TODO: print prompt and evaluate the expression
+		Node value;
 		root = parser.parseExp();
 		while (root != null) {
 			root.print(0);
 			root = parser.parseExp();
+			value = eval(root);
+			System.out.println("Printing: " + value);
 		}
 		System.exit(0);
 	}
