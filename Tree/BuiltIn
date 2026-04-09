@@ -19,12 +19,13 @@ public class BuiltIn extends Node {
     // TODO: For allowing the built-in functions to access the environment,
     // keep a copy of the Environment here and synchronize it with
     // class Scheme4101.
-
-    // private static Environment globalEnv = null;
     //
-    // public static void setGlobalEnv(Environment env) {
-    // globalEnv = env;
-    // }
+
+    private static Environment globalEnv = null;
+    
+    public static void setGlobalEnv(Environment env) {
+        globalEnv = env;
+    }
 
     private Node symbol;
 
@@ -55,33 +56,45 @@ public class BuiltIn extends Node {
     // TODO: The method apply() should be defined in class Node
     // to report an error. It should be overwritten only in classes
     // BuiltIn and Closure.
-    public Node apply(Node args) {
-        return null;
-    }
+    //
 
     // The easiest way to implement BuiltIn.apply is as an
     // if-then-else chain testing for the different names of
     // the built-in functions.  E.g., here's how load could
     // be implemented:
+    public Node apply(Node args) {
+        if (name.equals("read")) {
+            Node readNode = new Node(args.parseExp());
+            return readNode;
+        } else if (name.equals("write")) {
+            //TODO: call pretty-printer
+        } else if (name.equals("display")) {
+            //TODO: call pretty-printer
+        } else if (name.equals("eval")) {
+            Node evalNode = new Node(args.eval());
+            return evalNode;
+        } else if (name.equals("apply")) {
+            Node applyNode = new Node(args.apply());
+            return applyNode;
+        } else if (name.equals("interaction-environment")) {
+            if (!arg1.isString()) {
+                System.err.println("Error: wrong type of argument");
+                return Nil.getInstance();
+            }
+            String filename = arg1.getStrVal();
+            try {
+                Scanner scanner = new Scanner(new FileInputStream(filename));
+                Parser parser = new Parser(scanner);
 
-    // if (name.equals("load")) {
-    //     if (!arg1.isString()) {
-    //         System.err.println("Error: wrong type of argument");
-    //         return Nil.getInstance();
-    //     }
-    //     String filename = arg1.getStrVal();
-    //     try {
-    //         Scanner scanner = new Scanner(new FileInputStream(filename));
-    //         Parser parser = new Parser(scanner);
-    //
-    //         Node root = parser.parseExp();
-    //         while (root != null) {
-    //             root.eval(globalEnv);
-    //             root = parser.parseExp();
-    //         }
-    //     } catch (IOException e) {
-    //         System.err.println("Could not find file " + filename);
-    //     }
-    //     return Nil.getInstance();  // or Unspecific.getInstance();
-    // }
-}
+                Node root = parser.parseExp();
+                while (root != null) {
+                    root.eval(globalEnv);
+                    root = parser.parseExp();
+                    return root;
+                }
+            } catch (IOException e) {
+                System.err.println("Could not find file " + filename);
+            }
+            return Nil.getInstance();
+        }
+    }
