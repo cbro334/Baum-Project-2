@@ -8,12 +8,12 @@ import Tree.Node;
 
 public class Scheme4101 {
 
-	// private static Environment env = null;
+	private static Environment env = null;
 
-	// private static final String prompt = "Scheme4101> ";
-	// private static final String prompt = "> ";
+	private static final String prompt = "Scheme4101> ";
+	private static final String prompt = "> ";
 
-	// private static final String ini_file = "ini.scm";
+	private static final String ini_file = "ini.scm";
 
 	public static void main(String argv[]) {
 
@@ -55,8 +55,8 @@ public class Scheme4101 {
 		// TODO: Create and populate the built-in environment and
 		// create the top-level environment
 
-		// env = new Environment();
-		// BuiltIn.setGlobalEnv(env);
+		env = new Environment();
+		BuiltIn.setGlobalEnv(env);
 		//
 		// populate the environment with BuiltIns and the code from ini.scm
 		//
